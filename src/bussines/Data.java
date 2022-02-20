@@ -123,7 +123,7 @@ public class Data {
         int maiorDia = verificarQualOMaiorNumero(diaData1, diaData2);
 
         if (maiorDia) {
-            return maiorDia == mesData1 ? data1 : data2;
+            return maiorDia == diaData1 ? data1 : data2;
         }
 
     }
