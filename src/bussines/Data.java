@@ -20,6 +20,18 @@ public class Data {
         }
     }
 
+    public int getDia() {
+        return this.dia;
+    }
+
+    public int getMes() {
+        return this.mes;
+    }
+
+    public int getAno() {
+        return this.ano;
+    }
+
     private boolean validarData(int dia, int mes, int ano) {
         return verificarSeDiaExisteAPartirDoMes(dia, mes, ano) && 
         verificarSeMesExiste(mes) &&
@@ -68,6 +80,64 @@ public class Data {
 
     private boolean verificarSeAnoExiste(int ano) {
         return ano > 0;
+    }
+
+    public void adicionarDias(int dias) {
+        int diasSomados = this.dias + dias;
+        boolean diaValido = verificarSeDiaExisteAPartirDoMes(diasSomados, this.mes, this.ano);
+
+        if (!diaValido) {
+            for (int i = 1; diasSomados < 30;)            
+        }
+        else {
+            this.dia = dias;
+        }
+    }
+
+    private int receberValorDeDiasAPartirDoMes(int dia, int mes) {
+
+    }
+
+    public Data verificarQualAMaiorData(Data data1, Data data2) {
+        int anoData1 = data1.getAno();
+        int anoData2 = data2.getAno();
+
+        int mesData1 = data1.getMes();
+        int mesData2 = data2.getMes();
+
+        int diaData1 = data1.getDia();
+        int diaData2 = data2.getDia();
+
+        int maiorAno = verificarQualOMaiorNumero(anoData1, anoData2);
+        
+        if (maiorAno) {
+            return maiorAno == anoData1 ? data1 : data2;
+        }
+
+        int maiorMes = verificarQualOMaiorNumero(mesData1, mesData2);
+
+        if (maiorMes) {
+            return maiorMes == mesData1 ? data1 : data2;
+        }
+
+        int maiorDia = verificarQualOMaiorNumero(diaData1, diaData2);
+
+        if (maiorDia) {
+            return maiorDia == mesData1 ? data1 : data2;
+        }
+
+    }
+
+    private int verificarQualOMaiorNumero(int numero1, int numero2) {
+        if (numero1 > numero2) {
+            return numero1;
+        }
+        else if(numero1 < numero2) {
+            return numero2;
+        }
+        else {
+            return null;
+        }
     }
 
     public void imprimirData() {
