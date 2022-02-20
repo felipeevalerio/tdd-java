@@ -12,18 +12,21 @@ public class Data {
     private final int LIMITE_MAXIMO_MESES = 12;
 
     public Data(int dia, int mes, int ano) {
-        this.dia = dia;
-        this.mes = mes;
-        this.ano = ano;
+        boolean dataValida = validarData(dia, mes, ano);
+        if (dataValida) {
+            this.dia = dia;
+            this.mes = mes;
+            this.ano = ano;
+        }
     }
 
     private boolean validarData(int dia, int mes, int ano) {
-        return verificarSeDiaExisteAPartirDoMes(dia, mes) && 
+        return verificarSeDiaExisteAPartirDoMes(dia, mes, ano) && 
         verificarSeMesExiste(mes) &&
         verificarSeAnoExiste(ano);
     }
 
-    private boolean verificarSeDiaExisteAPartirDoMes(int dia, int mes) {
+    private boolean verificarSeDiaExisteAPartirDoMes(int dia, int mes, int ano) {
         if (dia > 0) {
             switch (mes) {
                 case Mes.FEVEREIRO.getCodigoMes():
@@ -56,12 +59,7 @@ public class Data {
     }
 
     private boolean verificarSeEstaEmAnoBissexto(int ano) {
-        if (ano % 4 == 0 &&
-            ano % 100 != 0 && 
-        )    
-        {
-
-        }
+        return (ano % 4 == 0 && ano % 100 != 0) || ano % 400 == 0;    
     }
 
     private boolean verificarSeMesExiste(int mes) {
@@ -73,7 +71,13 @@ public class Data {
     }
 
     public void imprimirData() {
-        
+        String diaFormatado = tratarFormatoDeNumerosAbaixoDeZero(this.dia);
+        String mesFormatado = tratarFormatoDeNumerosAbaixoDeZero(this.mes);
+
+        System.out.println(diaFormatado + "/" + mesFormatado + "/" + ano);
     }
 
+    private String tratarFormatoDeNumerosAbaixoDeZero(int numero) {
+        return numero < 10 ? "0" + numero.toString() : numero.toString();
+    }
 }
