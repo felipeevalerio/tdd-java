@@ -2,48 +2,50 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import bussines.Conjunto;
 
 public class ConjuntoTest {
+    Conjunto c;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        c = new Conjunto();
+    }
     
     @Test
-    @DisplayName("Deve retornar o tamanho do conjunto como vazio")
     void testConjuntoDeveEstarVazio() {
-        Conjunto c = new Conjunto();
         assertEquals(0, c.getTamanho());
         assertTrue(c.vazio());
     }
 
     @Test
-    @DisplayName("Deve adicionar um elemento ao conjunto")
     void testAdicionarUm() {
         // Arrange
-        Conjunto c = new Conjunto();
-        
+        int tamanho = c.getTamanho();
         // Act
         c.adicionar(5);
         
         // Assert
-        assertEquals(1, c.getTamanho());
+        assertEquals(tamanho + 1, c.getTamanho());
     }
 
     @Test 
     void testAdicionarNumeroRepetido() {
         // Arrange
-        Conjunto c = new Conjunto();
+        int tamanho = c.getTamanho();
+
         // Act
         c.adicionar(5);
         c.adicionar(5);
         // Assert
-        assertEquals(1, c.getTamanho());
+        assertEquals(tamanho + 1, c.getTamanho());
     }
 
     @Test
     void testContem() {
-        Conjunto c = new Conjunto();
         c.adicionar(5);
         boolean valorExiste = c.contem(5);
         assertTrue(valorExiste);
