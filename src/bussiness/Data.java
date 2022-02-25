@@ -38,9 +38,21 @@ public class Data {
     public int getMes() {
         return this.mes;
     }
-
+    
     public int getAno() {
         return this.ano;
+    }
+    
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
     }
 
     public boolean validarData(int dia, int mes, int ano) {
@@ -72,25 +84,32 @@ public class Data {
     }
 
     public void adicionarDias(int dias) {
-        int diasSomados = this.dia + dias;
+        int diasSomados = getDia() + dias;
         boolean diaValido = verificarSeDiaExisteAPartirDoMes(diasSomados, this.mes, this.ano);
 
         if (!diaValido) {
             int diasMaximoPorMes = receberValorDeDiasAPartirDoMes(mes, ano);
-            int mesAtual = this.mes;
+            int mesAtual = getMes();
 
             for (int i = mesAtual; diasSomados >  diasMaximoPorMes; i++) {
                 diasSomados -= diasMaximoPorMes; 
 
                 mesAtual = i + 1;
-                diasMaximoPorMes = receberValorDeDiasAPartirDoMes(mesAtual, this.ano);
+
+                if (mesAtual > LIMITE_MAXIMO_MESES) {
+                    setAno(getAno() + 1);
+                    i = 1;
+                    mesAtual = 1;
+                }
+
+                diasMaximoPorMes = receberValorDeDiasAPartirDoMes(mesAtual, getAno());
             }            
 
-            this.dia = diasSomados;
-            this.mes = mesAtual;
+            setDia(diasSomados);
+            setMes(mesAtual);
         }
         else {
-            this.dia = diasSomados;
+            setDia(diasSomados);
         }
     }
 
