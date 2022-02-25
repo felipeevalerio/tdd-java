@@ -1,7 +1,5 @@
 package bussiness;
 
-import bussiness.enums.Mes;
-
 public class Data { 
     private int dia;
     private int mes;
@@ -32,7 +30,7 @@ public class Data {
         return this.ano;
     }
 
-    private boolean validarData(int dia, int mes, int ano) {
+    public boolean validarData(int dia, int mes, int ano) {
         return verificarSeDiaExisteAPartirDoMes(dia, mes, ano) && 
         verificarSeMesExiste(mes) &&
         verificarSeAnoExiste(ano);
@@ -40,25 +38,8 @@ public class Data {
 
     private boolean verificarSeDiaExisteAPartirDoMes(int dia, int mes, int ano) {
         if (dia > 0) {
-            switch (mes) {
-                case Mes.FEVEREIRO.getCodigoMes():
-                    return dia <= receberValorDeDiasAPartirDoMes(Mes.FEVEREIRO, ano)
-
-                case Mes.ABRIL.getCodigoMes():
-                case Mes.JUNHO.getCodigoMes():
-                case Mes.SETEMBRO.getCodigoMes():
-                case Mes.NOVEMBRO.getCodigoMes():
-                    return dia <= receberValorDeDiasAPartirDoMes(Mes.ABRIL, ano);
-
-                case Mes.JANEIRO.getCodigoMes():
-                case Mes.MARCO.getCodigoMes():
-                case Mes.MAIO.getCodigoMes():
-                case Mes.JULHO.getCodigoMes():
-                case Mes.AGOSTO.getCodigoMes():
-                case Mes.OUTUBRO.getCodigoMes():
-                case Mes.DEZEMBRO.getCodigoMes():
-                    return dia <= receberValorDeDiasAPartirDoMes(Mes.JANEIRO, ano);
-            }
+            int diasAPartirDoMes = receberValorDeDiasAPartirDoMes(mes, ano);
+            return dia <= diasAPartirDoMes;
         }
         else {
             return false;
@@ -78,49 +59,51 @@ public class Data {
     }
 
     public void adicionarDias(int dias) {
-        int diasSomados = this.dias + dias;
+        int diasSomados = this.dia + dias;
         boolean diaValido = verificarSeDiaExisteAPartirDoMes(diasSomados, this.mes, this.ano);
 
         if (!diaValido) {
-            int diasMaximoPorMes = receberValorDeDiasAPartirDoMes(mes);
+            int diasMaximoPorMes = receberValorDeDiasAPartirDoMes(mes, ano);
             int mesAtual = this.mes;
 
-            for (int i = mesAtual; diasSomados < diasMaximoPorMes; i++) {
+            for (int i = mesAtual; diasSomados >  diasMaximoPorMes; i++) {
                 diasSomados -= diasMaximoPorMes; 
 
-                mesAtual = i;
-                diasMaximoPorMes = receberValorDeDiasAPartirDoMes(i, this.ano);
+                mesAtual = i + 1;
+                diasMaximoPorMes = receberValorDeDiasAPartirDoMes(mesAtual, this.ano);
             }            
 
             this.dia = diasSomados;
             this.mes = mesAtual;
-            this.ano = ano
         }
         else {
-            this.dia = dias;
+            this.dia = diasSomados;
         }
     }
 
     private int receberValorDeDiasAPartirDoMes(int mes, int ano) {
         switch (mes) {
-            case Mes.FEVEREIRO.getCodigoMes():
+            case 2:
                 boolean estaEmAnoBissexto = verificarSeEstaEmAnoBissexto(ano);
                 return estaEmAnoBissexto ? LIMITE_MAXIMO_DIAS_FEVEREIRO_ANO_BISSEXTO : LIMITE_MAXIMO_DIAS_FEVEREIRO_SEM_ANO_BISSEXTO;
 
-            case Mes.ABRIL.getCodigoMes():
-            case Mes.JUNHO.getCodigoMes():
-            case Mes.SETEMBRO.getCodigoMes():
-            case Mes.NOVEMBRO.getCodigoMes():
+            case 4:
+            case 6:
+            case 9:
+            case 11:
                 return 30;
 
-            case Mes.JANEIRO.getCodigoMes():
-            case Mes.MARCO.getCodigoMes():
-            case Mes.MAIO.getCodigoMes():
-            case Mes.JULHO.getCodigoMes():
-            case Mes.AGOSTO.getCodigoMes():
-            case Mes.OUTUBRO.getCodigoMes():
-            case Mes.DEZEMBRO.getCodigoMes():
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
                 return 31;
+
+            default:
+                return 0;
         }
     }
 
@@ -136,22 +119,25 @@ public class Data {
 
         int maiorAno = verificarQualOMaiorNumero(anoData1, anoData2);
         
-        if (maiorAno) {
-            return maiorAno == anoData1 ? data1 : data2;
+        if(anoData1 != anoData2 || mesData1 != mesData2 || diaData1 != diaData2) {
+            if (maiorAno != 0) {
+                return maiorAno == anoData1 ? data1 : data2;
+            }
+    
+            int maiorMes = verificarQualOMaiorNumero(mesData1, mesData2);
+    
+            if (maiorMes != 0) {
+                return maiorMes == mesData1 ? data1 : data2;
+            }
+    
+            int maiorDia = verificarQualOMaiorNumero(diaData1, diaData2);
+    
+            if (maiorDia != 0) {
+                return maiorDia == diaData1 ? data1 : data2;
+            }
         }
 
-        int maiorMes = verificarQualOMaiorNumero(mesData1, mesData2);
-
-        if (maiorMes) {
-            return maiorMes == mesData1 ? data1 : data2;
-        }
-
-        int maiorDia = verificarQualOMaiorNumero(diaData1, diaData2);
-
-        if (maiorDia) {
-            return maiorDia == diaData1 ? data1 : data2;
-        }
-
+        return data1;
     }
 
     private int verificarQualOMaiorNumero(int numero1, int numero2) {
@@ -161,8 +147,8 @@ public class Data {
         else if(numero1 < numero2) {
             return numero2;
         }
-        else {
-            return null;
+        else { 
+            return 0;
         }
     }
 
@@ -174,6 +160,6 @@ public class Data {
     }
 
     private String tratarFormatoDeNumerosAbaixoDeZero(int numero) {
-        return numero < 10 ? "0" + numero.toString() : numero.toString();
+        return numero < 10 ? "0" + Integer.toString(numero) : Integer.toString(numero);
     }
 }
