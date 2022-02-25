@@ -52,7 +52,7 @@ public class Data {
     private boolean verificarSeDiaExisteAPartirDoMes(int dia, int mes, int ano) {
         if (dia > 0) {
             int diasAPartirDoMes = receberValorDeDiasAPartirDoMes(mes, ano);
-            return dia <= diasAPartirDoMes;
+            return (diasAPartirDoMes != 0) && (dia <= diasAPartirDoMes);
         }
         else {
             return false;
