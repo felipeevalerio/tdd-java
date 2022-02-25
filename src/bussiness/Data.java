@@ -9,6 +9,19 @@ public class Data {
     private final int LIMITE_MAXIMO_DIAS_FEVEREIRO_ANO_BISSEXTO = 29;
     private final int LIMITE_MAXIMO_MESES = 12;
 
+    private final int NUMERO_MES_JANEIRO = 1;
+    private final int NUMERO_MES_FEVEREIRO = 2;
+    private final int NUMERO_MES_MARCO = 3;
+    private final int NUMERO_MES_ABRIL = 4;
+    private final int NUMERO_MES_MAIO = 5;
+    private final int NUMERO_MES_JUNHO = 6;
+    private final int NUMERO_MES_JULHO = 7;
+    private final int NUMERO_MES_AGOSTO = 8;
+    private final int NUMERO_MES_SETEMBRO = 9;
+    private final int NUMERO_MES_OUTUBRO = 10;
+    private final int NUMERO_MES_NOVEMBRO = 11;
+    private final int NUMERO_MES_DEZEMBRO = 12;
+
     public Data(int dia, int mes, int ano) {
         boolean dataValida = validarData(dia, mes, ano);
         if (dataValida) {
@@ -83,23 +96,23 @@ public class Data {
 
     private int receberValorDeDiasAPartirDoMes(int mes, int ano) {
         switch (mes) {
-            case 2:
+            case NUMERO_MES_FEVEREIRO:
                 boolean estaEmAnoBissexto = verificarSeEstaEmAnoBissexto(ano);
                 return estaEmAnoBissexto ? LIMITE_MAXIMO_DIAS_FEVEREIRO_ANO_BISSEXTO : LIMITE_MAXIMO_DIAS_FEVEREIRO_SEM_ANO_BISSEXTO;
 
-            case 4:
-            case 6:
-            case 9:
-            case 11:
+            case NUMERO_MES_ABRIL:
+            case NUMERO_MES_JUNHO:
+            case NUMERO_MES_SETEMBRO:
+            case NUMERO_MES_NOVEMBRO:
                 return 30;
 
-            case 1:
-            case 3:
-            case 5:
-            case 7:
-            case 8:
-            case 10:
-            case 12:
+            case NUMERO_MES_JANEIRO:
+            case NUMERO_MES_MARCO:
+            case NUMERO_MES_MAIO:
+            case NUMERO_MES_JULHO:
+            case NUMERO_MES_AGOSTO:
+            case NUMERO_MES_OUTUBRO:
+            case NUMERO_MES_DEZEMBRO:
                 return 31;
 
             default:
