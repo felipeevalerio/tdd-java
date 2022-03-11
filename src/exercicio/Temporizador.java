@@ -48,6 +48,10 @@ public class Temporizador {
         return this.minutos;
     }
 
+    public String formatarTempoMinutosSegundos(int minutos, int segundos) {
+        return  String.format("%02d:%02d", this.getMinutos(), this.getSegundos());
+    }
+
     private void setSegundos(int segundos) {
         this.segundos = segundos;
     }

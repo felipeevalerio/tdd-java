@@ -1,6 +1,10 @@
 public class Microondas {
     private boolean estaAberto;
     private boolean estaLigado;
+    private Temporizador temporizador;
+
+    private int minutosIniciais;
+    private int segundosIniciais; 
 
     public Microondas() {
         estaAberto = false;
@@ -18,9 +22,13 @@ public class Microondas {
             setEstaAberto(false);
         } 
     }
-
-    public void ligar() {
+    
+    public void ligar(int minutos, int segundos) {
         if(!isEstaAberto() && !isEstaLigado()) {
+            this.minutosIniciais = minutos;
+            this.segundosIniciais = segundos;
+
+            temporizador = new Temporizador(minutos, segundos);
             setEstaLigado(true);
         }
     }
@@ -28,20 +36,33 @@ public class Microondas {
     public void desligar() {
         if(!isEstaAberto() && isEstaLigado()) {
             setEstaLigado(false);
+        } 
+    }
+    
+    public void passarTempoEmUmSegundo() {
+        if((!isEstaAberto() && isEstaLigado()) && (temporizador.getMinutos() >= 0 || temporizador.getSegundos() > 0)) {
+            temporizador.diminuiTempoEmUmSegundo();
+        } else {
+            this.desligar();
         }
     }
 
-    public void iniciarMicroondas(int minutos, int segundos) {
-        if(!isEstaAberto() && isEstaLigado()) {
-            Temporizador temporizador = new Temporizador(minutos, segundos);
-            while(temporizador.getSegundos() > 0 || temporizador.getMinutos() >= 0) {
-                temporizador.diminuiTempoEmUmSegundo();
-            }
-        }
+    public int obterTempoSegundos() {
+        return temporizador.getSegundos();
+    }
+
+    public int obterTempoMinutos() {
+        return temporizador.getMinutos();
     }
 
     public void reiniciarMicroondas() {
+        this.desligar();
+        this.ligar(minutosIniciais, segundosIniciais);
+    }
 
+    public void sinalizarTempo() {
+        String tempoFormatado = temporizador.formatarTempoMinutosSegundos(temporizador.getMinutos(), temporizador.getSegundos());
+        System.out.println(tempoFormatado);
     }
 
     public boolean isEstaLigado() {

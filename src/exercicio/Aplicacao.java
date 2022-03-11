@@ -1,8 +1,8 @@
 public class Aplicacao {
     public static void main(String[] args){
         Microondas microondas = new Microondas();
-        microondas.ligar();
+        microondas.ligar(1,30);
+        microondas.sinalizarTempo();
         microondas.fechar();
-        microondas.iniciarMicroondas(1, 30);
     }
 }

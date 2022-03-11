@@ -6,11 +6,13 @@ import org.junit.jupiter.api.Test;
 public class MicroondasTest {
     
     Microondas microondas;
+    private final int MINUTOS_INICIAIS_MICROONDAS = 1;
+    private final int SEGUNDOS_INICIAIS_MICROONDAS = 30;
 
     @BeforeEach
     public void inicializar() {
         microondas = new Microondas();
-        microondas.ligar();
+        microondas.ligar(MINUTOS_INICIAIS_MICROONDAS, SEGUNDOS_INICIAIS_MICROONDAS);
     }
 
     @Test 
@@ -43,10 +45,26 @@ public class MicroondasTest {
     }
 
     @Test
-    public void iniciarMicroondas() {
-        microondas.iniciarMicroondas(1, 20);
+    public void passarTempoEmUmSegundo() {
+        int segundosEsperados = SEGUNDOS_INICIAIS_MICROONDAS - 1;
+        microondas.passarTempoEmUmSegundo();
         
+        assertEquals(segundosEsperados, microondas.obterTempoSegundos());
+        assertEquals(MINUTOS_INICIAIS_MICROONDAS, microondas.obterTempoMinutos());
     }
-
     
+    @Test
+    public void passarTempoEmUmSegundoUltrapassandoOMinuto() {
+        int minutosEsperados = MINUTOS_INICIAIS_MICROONDAS - 1;
+        int segundosEsperados = 59;
+        int i = 0;
+
+        while(i <= SEGUNDOS_INICIAIS_MICROONDAS) {
+            microondas.passarTempoEmUmSegundo();
+            i++;
+        }
+
+        assertEquals(segundosEsperados, microondas.obterTempoSegundos());
+        assertEquals(minutosEsperados, microondas.obterTempoMinutos());
+    }
 }
