@@ -50,47 +50,47 @@ public class DataTest {
 
     @Test
     public void testandoCriacaoDeDataComParametro(){
-        dataComParametro =  new Data(12,05,2020);
+        dataComParametro = new Data(12,05,2020);
 
-        assertEquals(12,dataComParametro.getDia());
-        assertEquals(05,dataComParametro.getMes());
-        assertEquals(2020,dataComParametro.getAno());
+        assertEquals(12, dataComParametro.getDia());
+        assertEquals(05, dataComParametro.getMes());
+        assertEquals(2020, dataComParametro.getAno());
     }
 
     @Test
     public void testandoReceberDataPorextenso(){
-        dataComParametro =  new Data(27,07,2021);
+        dataComParametro = new Data(27,07,2021);
 
-        assertEquals("27/07/2021",dataComParametro.porExtenso());
+        assertEquals("27/07/2021", dataComParametro.porExtenso());
     }
 
     @Test 
     public void testandoAdicionarDias(){
         data.adicionarDias(100);
-        assertEquals(25,data.getDia());
-        assertEquals(06,data.getMes());
-        assertEquals(2022,data.getAno());
+        assertEquals(25, data.getDia());
+        assertEquals(06, data.getMes());
+        assertEquals(2022, data.getAno());
     }
 
     @Test
     public void testandoDiasNoMes(){
         dataComParametro = new Data(20,02,2000);
-        assertEquals(29,dataComParametro.diasNoMes());
+        assertEquals(29, dataComParametro.diasNoMes());
     }
     
     @Test
     public void testandoPassarUmDia(){
         dataComParametro = new Data(31,07,2021);
         dataComParametro.proximoDia();
-        assertEquals(01,dataComParametro.getDia());
-        assertEquals(8,dataComParametro.getMes());
-        assertEquals(2021,dataComParametro.getAno());
-        
+
+        assertEquals(01, dataComParametro.getDia());
+        assertEquals(8, dataComParametro.getMes());
+        assertEquals(2021, dataComParametro.getAno());
     }    
+
     @Test
     public void testandoDiaDaSemana(){
         dataComParametro = new Data(18,03,2022);
-        assertEquals("Sexta-feira",dataComParametro.diaDaSemana());
+        assertEquals("Sexta-feira", dataComParametro.diaDaSemana());
     }
-    
 }
